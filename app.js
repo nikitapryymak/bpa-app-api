@@ -8,6 +8,7 @@ const {
   getGameInfoController,
   getGamesController,
   getOpponentsController,
+  deleteGameController,
 } = require("./controllers/game.controller");
 const {
   getPlayersController,
@@ -31,6 +32,7 @@ app.get("/players/:id", getPlayerInfoController);
 app.get("/games", getGamesController);
 app.post("/games", authenticate, addGameController);
 app.get("/games/:id", getGameInfoController);
+app.delete("/games/:id", authenticate, deleteGameController);
 app.post("/opponents", getOpponentsController);
 
 // error handler

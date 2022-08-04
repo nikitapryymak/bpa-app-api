@@ -1,16 +1,19 @@
 const {
   ENTITY_NOT_CREATED,
   ENTITY_NOT_FOUND,
+  ENTITY_NOT_DELETED,
 } = require("../constants/AppErrorCodes.js");
 const { validateAddGameRequest, validateId } = require("../schemas/schemas.js");
 const {
   addGame,
   getGameById,
   getGames,
+  deleteGameById,
 } = require("../services/game.service.js");
 const {
   insertStats,
   getStatsByGameId,
+  deleteStatsByGameId,
 } = require("../services/stat.service.js");
 const { tryCatch, assertCondition } = require("../utils/utils.js");
 
@@ -59,4 +62,18 @@ exports.getGameInfoController = tryCatch(async (req, res) => {
   );
 
   res.json({ ...game, stats });
+});
+
+exports.deleteGameController = tryCatch(async (req, res) => {
+  const { id } = req.params;
+  const { error } = validateId(id);
+  if (error) throw error;
+
+  const statsDeleted = await deleteStatsByGameId(id);
+  assertCondition(statsDeleted, ENTITY_NOT_DELETED, "Failed to delete stats");
+
+  const gameDeleted = await deleteGameById(id);
+  assertCondition(gameDeleted, ENTITY_NOT_DELETED, "Failed to delete game");
+
+  res.json({ gameId: id });
 });
