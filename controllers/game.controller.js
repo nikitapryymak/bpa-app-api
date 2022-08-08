@@ -9,6 +9,7 @@ const {
   getGameById,
   getGames,
   deleteGameById,
+  getOpponents,
 } = require("../services/game.service.js");
 const {
   insertStats,
@@ -42,8 +43,8 @@ exports.getGamesController = tryCatch(async (req, res) => {
 });
 
 exports.getOpponentsController = tryCatch(async (req, res) => {
-  const opponents = await getOpponents();
-  res.json(opponents);
+  const results = await getOpponents();
+  res.json(results.map(({ opponent }) => opponent));
 });
 
 exports.getGameInfoController = tryCatch(async (req, res) => {
