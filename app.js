@@ -19,13 +19,15 @@ const {
 } = require("./controllers/leaderboard.controller");
 const authenticate = require("./middleware/authenticate");
 const { CLIENT_URL, PORT, NODE_ENV } = require("./constants/envVariables");
+const verifyOrigin = require("./middleware/verifyOrigin");
 
 // initialize modules and middleware
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: CLIENT_URL }));
-
 app.get("/", (_, res) => res.status(200).json({ status: "healthy" }));
+app.use(cors({ origin: CLIENT_URL }));
+app.use(verifyOrigin);
+
 app.get("/leaderboard", getLeaderboardController);
 app.get("/players", getPlayersController);
 app.get("/players/:id", getPlayerInfoController);
