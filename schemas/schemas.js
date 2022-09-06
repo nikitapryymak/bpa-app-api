@@ -1,7 +1,6 @@
 const Joi = require("joi");
-const { validator } = require("../utils/utils");
 
-const addGameSchema = Joi.object({
+exports.AddGameSchema = Joi.object({
   date: Joi.date().required().messages({
     "date.base": "Please enter a valid date",
   }),
@@ -93,7 +92,16 @@ const addGameSchema = Joi.object({
   ),
 });
 
-const ValidIdSchema = Joi.number().integer().required();
+const ValidId = Joi.number().integer().required();
 
-exports.validateAddGameRequest = validator(addGameSchema);
-exports.validateId = validator(ValidIdSchema);
+exports.AddReportSchema = Joi.object({
+  catcherId: Joi.number().integer().required(),
+  pitcherId: Joi.number().integer().required(),
+  date: Joi.date().required(),
+  FB: Joi.string().required(),
+  CB: Joi.string().required(),
+  SLI: Joi.string().required(),
+  CU: Joi.string().required(),
+  other: Joi.optional(),
+});
+exports.validateId = (id) => ValidId.validate(id);

@@ -1,4 +1,5 @@
-const { PLAYERS } = require("../constants/tables");
+const { POSITION_PITCHER } = require("../constants/AppConstants");
+const { PLAYERS, CTCH_PLAYERS } = require("../constants/tables");
 const db = require("../db/db");
 
 exports.getPlayers = async () => db(PLAYERS);
@@ -36,3 +37,8 @@ exports.getPlayerRecentStats = async (id) =>
     .innerJoin("games as g", "s.gameId", "=", "g.gameId")
     .where("playerId", id)
     .orderBy("date", "desc");
+
+// catcher app
+exports.getPitchersAndCatchers = async () => db(CTCH_PLAYERS);
+exports.getPitcherById = async (playerId) =>
+  db(CTCH_PLAYERS).where({ playerId, position: POSITION_PITCHER });

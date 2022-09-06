@@ -3,7 +3,7 @@ const {
   ENTITY_NOT_FOUND,
   ENTITY_NOT_DELETED,
 } = require("../constants/AppErrorCodes.js");
-const { validateAddGameRequest, validateId } = require("../schemas/schemas.js");
+const { validateId, AddGameSchema } = require("../schemas/schemas.js");
 const {
   addGame,
   getGameById,
@@ -16,10 +16,10 @@ const {
   getStatsByGameId,
   deleteStatsByGameId,
 } = require("../services/stat.service.js");
-const { tryCatch, assertCondition } = require("../utils/utils.js");
+const { tryCatch, assertCondition, validator } = require("../utils/utils.js");
 
 exports.addGameController = tryCatch(async (req, res) => {
-  const { error, value: request } = validateAddGameRequest(req.body);
+  const { error, value: request } = validator(AddGameSchema, req.body);
   if (error) throw error;
 
   const { date, opponent, title, stats } = request;
@@ -34,17 +34,17 @@ exports.addGameController = tryCatch(async (req, res) => {
     "Failed to add stats"
   );
 
-  res.json({ succes: true });
+  return res.json({ succes: true });
 });
 
 exports.getGamesController = tryCatch(async (req, res) => {
   const games = await getGames();
-  res.json(games);
+  return res.json(games);
 });
 
 exports.getOpponentsController = tryCatch(async (req, res) => {
   const results = await getOpponents();
-  res.json(results.map(({ opponent }) => opponent));
+  return res.json(results.map(({ opponent }) => opponent));
 });
 
 exports.getGameInfoController = tryCatch(async (req, res) => {
@@ -62,7 +62,7 @@ exports.getGameInfoController = tryCatch(async (req, res) => {
     `Stats for game ${id} not found`
   );
 
-  res.json({ ...game, stats });
+  return res.json({ ...game, stats });
 });
 
 exports.deleteGameController = tryCatch(async (req, res) => {
@@ -76,5 +76,5 @@ exports.deleteGameController = tryCatch(async (req, res) => {
   const gameDeleted = await deleteGameById(id);
   assertCondition(gameDeleted, ENTITY_NOT_DELETED, "Failed to delete game");
 
-  res.json({ gameId: id });
+  return res.json({ gameId: id });
 });

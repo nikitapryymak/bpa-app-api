@@ -14,7 +14,7 @@ exports.tryCatch = (controller) => async (req, res, next) => {
 exports.assertCondition = (condition, code, message) =>
   assert(condition, new AppError(code, message));
 
-exports.validator = (schema) => (payload) =>
+exports.validator = (schema, payload) =>
   schema.validate(payload, { abortEarly: false, stripUnknown: true });
 
 exports.verifyAdminKey = (key) => key && key === ADMIN_KEY;
