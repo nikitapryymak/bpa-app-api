@@ -35,7 +35,9 @@ exports.getLeaderboardController = tryCatch(async (req, res) => {
     initialTotals
   );
 
-  const totalAverageBPA = totals.BPA / Object.keys(leaderboard).length;
+  const totalAverageBPA = (totals.BPA / Object.keys(leaderboard).length)
+    .toString()
+    .substring(0, 5);
   const response = [...leaderboard, { ...totals, BPA: totalAverageBPA }];
 
   return res.json(response);
