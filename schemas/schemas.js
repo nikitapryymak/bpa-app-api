@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 exports.AddGameSchema = Joi.object({
-  date: Joi.date().required().messages({
+  date: Joi.string().required().messages({
     "date.base": "Please enter a valid date",
   }),
   opponent: Joi.string().required().messages({
