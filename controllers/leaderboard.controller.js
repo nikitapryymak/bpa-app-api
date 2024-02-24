@@ -15,7 +15,6 @@ const initialTotals = {
   FC: 0,
   H: 0,
   HBP: 0,
-  HEADSUP: 0,
   HR: 0,
   PA: 0,
   R: 0,

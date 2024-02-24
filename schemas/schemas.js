@@ -81,9 +81,6 @@ exports.AddGameSchema = Joi.object({
       "2OUTRBI": Joi.number().integer().min(0).required().messages({
         "number.base": "2OUTRBI must be a number",
       }),
-      HEADSUP: Joi.number().integer().min(0).required().messages({
-        "number.base": "HEADSUP must be a number",
-      }),
       BPA: Joi.number().required().messages({
         "number.base":
           "Failed to calculate Bases/PA. Please make sure all player stats are filled in",

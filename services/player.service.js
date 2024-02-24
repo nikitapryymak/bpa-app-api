@@ -30,7 +30,6 @@ exports.getPlayerRecentStats = async (id) =>
       "s.SAC",
       "s.SF",
       "s.2OUTRBI",
-      "s.HEADSUP",
       "s.BPA"
     )
     .from("stats as s")

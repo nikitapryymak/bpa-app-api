@@ -41,6 +41,5 @@ exports.addTotals = (total, stat) => ({
   SO: total["SO"] + parseInt(stat["1B"]),
   TB: total["TB"] + parseInt(stat["TB"]),
   "2OUTRBI": total["2OUTRBI"] + parseInt(stat["2OUTRBI"]),
-  HEADSUP: total["HEADSUP"] + parseInt(stat["HEADSUP"]),
   BPA: total["BPA"] + parseInt(stat["BPA"]),
 });
