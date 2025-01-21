@@ -94,7 +94,9 @@ const ValidId = Joi.number().integer().required();
 exports.AddReportSchema = Joi.object({
   catcherId: Joi.number().integer().required(),
   pitcherId: Joi.number().integer().required(),
-  date: Joi.date().required(),
+  date: Joi.string()
+    .required()
+    .regex(/^\d{4}-\d{2}-\d{2}$/),
   FB: Joi.string().required(),
   CB: Joi.string().required(),
   SLI: Joi.string().required(),
